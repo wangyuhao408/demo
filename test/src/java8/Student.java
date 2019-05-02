@@ -1,4 +1,6 @@
-public class Student {
+package java8;
+
+public class Student implements defaultInterfaceDemo{
     private String firstName;
     private String lastName;
     private Integer grade;
