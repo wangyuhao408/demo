@@ -4,7 +4,7 @@ public class Student implements defaultInterfaceDemo{
     private String firstName;
     private String lastName;
     private Integer grade;
-    Integer passGrade = 60;
+    public Integer passGrade = 60;
 
     public Student(String firstName, String lastName, Integer gradle) {
         this.firstName = firstName;
