@@ -1,3 +1,4 @@
+import java7.ByteBufferDemo;
 import java7.NumberChangeDemo;
 import java7.PathNewApiDemo;
 import java7.SwitchDemo;
@@ -39,11 +40,12 @@ public class Demo {
         SwitchDemo switchDemo = new SwitchDemo();
         NumberChangeDemo numberChangeDemo = new NumberChangeDemo();
         PathNewApiDemo pathNewApiDemo = new PathNewApiDemo();
+        ByteBufferDemo byteBufferDemo = new ByteBufferDemo();
 
         System.out.println(numberChangeDemo.addBinary().toString() + "  "
                 + numberChangeDemo.addUnderLine().toString());
         System.out.println(switchDemo.generate("wangyuhao", "ÄÐ"));
         pathNewApiDemo.pathTest();
-
+        byteBufferDemo.useByteBuffer();
     }
 }

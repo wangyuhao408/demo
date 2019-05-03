@@ -3,14 +3,14 @@ package java7;
 import java.io.*;
 
 public class ThrowbaleDemo {
-    public void java7Before (String fileName) throws IOException {
+    public void java7Before(String fileName) throws IOException {
         FileInputStream inputStream = null;
         IOException readExpection = null;
         try {
             inputStream = new FileInputStream(fileName);
         } catch (IOException e) {
             readExpection = e;
-        }finally {
+        } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
@@ -33,7 +33,7 @@ public class ThrowbaleDemo {
             inputStream = new FileInputStream(fileName);
         } catch (IOException e) {
             readExpection = e;
-        }finally {
+        } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
@@ -50,10 +50,10 @@ public class ThrowbaleDemo {
         System.out.println(readExpection.getSuppressed().length);
     }
 
-    public void catchManyExpection () {
+    public void catchManyExpection() {
         try {
             Integer.parseInt("Hello");
-        }catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
         }
     }
@@ -63,7 +63,7 @@ public class ThrowbaleDemo {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             StringBuilder builder = new StringBuilder();
             String line = null;
-            while((line=reader.readLine())!=null){
+            while ((line = reader.readLine()) != null) {
                 builder.append(line);
                 builder.append(String.format("%n"));
             }
@@ -73,11 +73,11 @@ public class ThrowbaleDemo {
 
     //try中管理多个资源
     public void tryManyResources(String fromPath, String toPath) throws IOException {
-        try ( InputStream input = new FileInputStream(fromPath);
-              OutputStream output = new FileOutputStream(toPath) ) {
+        try (InputStream input = new FileInputStream(fromPath);
+             OutputStream output = new FileOutputStream(toPath)) {
             byte[] buffer = new byte[8192];
             int len = -1;
-            while( (len=input.read(buffer))!=-1 ) {
+            while ((len = input.read(buffer)) != -1) {
                 output.write(buffer, 0, len);
             }
         }
