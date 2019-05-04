@@ -1,0 +1,57 @@
+JAVA 8
+1.base64 编码
+SnApiService:
+private String encode(String resParams) {
+    try {
+      return Base64.getEncoder().encodeToString(resParams.getBytes(CHARACTER_CODING));
+    } catch (UnsupportedEncodingException e) {
+      throw new SnException(e.getMessage());
+    }
+  }
+
+2.datetime
+DateUtil:
+ public static Long formatDateToTimestamp(String dateTimeString) {
+    // 字符串时间转时间戳,毫秒
+    LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ofPattern(PATTERN_NORMAL));
+    return localDateTime.toInstant(ZonedDateTime.now().getOffset()).toEpochMilli();
+ }
+
+ 3.function
+HubSyncInventoryAdapter:
+private final Consumer<List<SkuInventoryDto>> fullInventoryConsumer;
+private final Consumer<List<SkuInventoryDto>> incrementalInventoryConsumer;
+......
+if (manager.isActive(INVENTORY)) {
+        Lists.partition(request.getSkuInventory().stream().filter(inv -> FULL_INVENTORY.typeEquals(inv.getType()))
+            .collect(Collectors.toList()), batchSize).forEach(fullInventoryConsumer::accept);
+        Lists.partition(request.getSkuInventory().stream().filter(inv -> INCREMENTAL.typeEquals(inv.getType()))
+            .collect(Collectors.toList()), batchSize).forEach(incrementalInventoryConsumer::accept);
+      } else {
+        Lists.partition(request.getSkuInventory(), batchSize).forEach(fullInventoryConsumer::accept);
+      }
+}
+
+4.optional
+DdCarrierCompanyRepository:
+	Optional<DdCarrierCompanyPo> findByStoreIdAndCarrierCode(String storeId, String carrierCode);
+
+DistributeLockService:
+	 public boolean acquire() {
+      		hasLocker = Optional.ofNullable(redisTemplate.opsForValue()
+          		.setIfAbsent(key, "1", TEN_MINUTE, TimeUnit.SECONDS)).orElse(true);
+      		return hasLocker;
+    	}
+
+5.stream
+SnSyncProductService:
+private SkuOnSales convertSku(SnProductPo productPo) {
+    List<SnSkuPo> skus = snSkuRepository.findByProductIdAndStoreId(productPo.getProductId(), productPo.getStoreId());
+    String storeCode = storeMappingService.getHubStoreCodeByStoreId(productPo.getStoreId());
+    List<SkuOnSale> skuOnSales = skus.stream()
+        .map(skuPo -> mapper.toSkuOnSale(productPo, skuPo, storeCode))
+        .collect(Collectors.toList());
+    return SkuOnSales.builder()
+        .sourceMarkCode(ROUTE_IOSP_PLATFORM)
+        .skuOnSale(skuOnSales).build();
+  }
