@@ -10,4 +10,12 @@ public class OptionalDemo {
         Integer value2 = b.get();
         return value1 + value2;
     }
+
+    public Optional<Object> optionalOfTest() {
+        return Optional.of(null);
+    }
+
+    public Optional<Object> optionalOfNullableTest() {
+        return Optional.ofNullable(null);
+    }
 }
