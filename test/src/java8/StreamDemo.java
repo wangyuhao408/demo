@@ -3,6 +3,7 @@ package java8;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class StreamDemo {
 
@@ -33,4 +34,12 @@ public class StreamDemo {
   public void parallelTest() {
     strings.parallelStream().filter(s -> s.isEmpty()).forEach(System.out::println);
   }
+
+  public void collectorsTest() {
+    List<String> filtered = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.toList());
+    System.out.println("筛选列表: " + filtered);
+    String mergedString = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.joining(", "));
+    System.out.println("合并字符串: " + mergedString);
+  }
+
 }

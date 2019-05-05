@@ -31,6 +31,8 @@ public class Demo {
         student.print();
 
         System.out.println(optionalDemo.sum(Optional.ofNullable(null), Optional.ofNullable(1)));
+        System.out.println(optionalDemo.mapAndOrElseTest(new Student("wang", "yuhao", 60)));
+        System.out.println(optionalDemo.isPresentTest(Optional.of(new Student("wang", "yuhao", 60))));
 
         dateTimeDemo.localDateTimeTest();
         dateTimeDemo.zoneDateTime();
